@@ -1,0 +1,21 @@
+#-----------------------------------Options-------------------------------------------
+project: 
+name: yolov3
+data: ./data/rtts_5c.yaml
+data_mode: normal
+hyp: ./hyp/hyp.voc.scratch.yaml
+model: yolov3.YOLOv3
+batch_size: 2
+checkpoint: 
+run_dir: runs\val\2023-04-25-02-27-58_yolov3	[default: ./runs]
+device: cuda	[default: ]
+cpu: False
+filter_cls: False
+tb_writer: True
+verbose: False
+conf_thres: 0.001
+nms_thres: 0.5
+task: val
+img_size_test: [544, 544]
+run_start_time: 2023-04-25-02-27-58	[default: None]
+#-------------------------------------------------------------------------------------
