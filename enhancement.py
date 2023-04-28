@@ -1,9 +1,8 @@
-from models.deyolo import DENet
 from utils.datasets import createRTTSDataLoader
-import torch
-import matplotlib.pyplot as plt
-import cv2
+from models.DENet import DENet
 import numpy as np
+import torch
+import cv2
 
 def test_DENet():
     model = DENet()
@@ -25,6 +24,7 @@ def test_DENet():
         #Show the images
         for i in range(imgs.shape[0]):
             cocatenated = np.concatenate((imgs[i], imgs_enhanced[i]), axis=1)
+            cocatenated = cv2.cvtColor(cocatenated, cv2.COLOR_RGB2BGR)
             cv2.imshow('Original vs. Enhanced Image', cocatenated)
             cv2.waitKey(2)
 
