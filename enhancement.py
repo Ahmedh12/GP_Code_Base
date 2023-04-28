@@ -32,25 +32,3 @@ if __name__ == '__main__':
 
     #shows the images and their enhanced versions in the first batch
     test_DENet()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # data_dict = {'val': '../datasets/RTTS/images/val/', 
-    #              'nc': 5, 
-    #              'is_coco': False, 
-    #              'names': ['bicycle', 'bus', 'car', 'motorbike', 'person'], 
-    #              'name': 'rtts_5c'}
-    # # opt = TestOptions().init()

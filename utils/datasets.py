@@ -41,6 +41,7 @@ class RTTS_Dataset(Dataset):
         label_name = os.path.join(self.label_dir,
                                 self.img_names[idx].replace('.png', '.txt'))
         image = cv2.imread(img_name)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         label = open(label_name, 'r').readlines()
         label = [l.strip().split(' ') for l in label]
         label = [[int(l[0]), float(l[1]), float(l[2]), float(l[3]), float(l[4])] for l in label]
@@ -95,7 +96,7 @@ def test_RTTS_Dataset():
             y1 = (l[2] - l[4]/2) * image.shape[0]
             x2 = (l[1] + l[3]/2) * image.shape[1]
             y2 = (l[2] + l[4]/2) * image.shape[0]
-            rect = plt.Rectangle((x1, y1), x2-x1, y2-y1, fill=False, edgecolor='g', linewidth=1.5)
+            rect = plt.Rectangle((x1, y1), x2-x1, y2-y1, fill=False, edgecolor='g', linewidth=1)
             ax.add_patch(rect)
 
         plt.imshow(image)
@@ -121,7 +122,7 @@ def test_RTTS_Dataloader():
             ax = axs[i_batch][j]
             ax.set_title('Batch #{} , Sample #{}'.format(i_batch , j))
             ax.axis('off')
-            ax.imshow(images[j].permute(1,2,0) * 255.0)
+            ax.imshow(images[j].permute(1,2,0))
 
             #show bounding boxes
             for l in labels[j]:
@@ -129,7 +130,7 @@ def test_RTTS_Dataloader():
                 y1 = (l[2] - l[4]/2) * images[j].shape[2]
                 x2 = (l[1] + l[3]/2) * images[j].shape[1]
                 y2 = (l[2] + l[4]/2) * images[j].shape[2]
-                rect = plt.Rectangle((x1, y1), x2-x1, y2-y1, fill=False, edgecolor='g', linewidth=1.5)
+                rect = plt.Rectangle((x1, y1), x2-x1, y2-y1, fill=False, edgecolor='g', linewidth=1)
                 ax.add_patch(rect)
             
         if i_batch == 3:
