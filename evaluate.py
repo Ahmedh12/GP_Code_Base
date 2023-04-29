@@ -374,26 +374,39 @@ def ap_per_class(tp,conf,pred_cls,target_cls,plot=False,save_dir='.', names=()):
     # i = r.mean(0).argmax()  # max Recall index
     return p[:, i], r[:, i], ap, f1[:, i], unique_classes.astype('int32')
 
-def print_stats_to_console(seen,nt,mp,mr,map50,verbose,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,batch_size,img_size):
+def print_stats_to_console(seen,nt,mp,mr,map50,print_stats,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,batch_size,img_size,run_dir):
+    #open the results text file if it exists 
+    if not os.path.exists(run_dir + '/results.txt'):
+        with open(run_dir + '/results.txt', 'x') as f:
+            f.write('')
+            
+    with open(run_dir + '/results.txt', 'a') as f:
+
         # Print results
-    pf = '%20s' + '%12.4g' * 6  # print format
-    print(pf % ('all', seen, nt.sum(), mp, mr, map50, map))
+        pf = '%20s' + '%12.4g' * 6  # print format
+        if print_stats:
+            print(pf % ('all', seen, nt.sum(), mp, mr, map50, map))
+        
+        f.write(pf % ('all', seen, nt.sum(), mp, mr, map50, map) + '\n')
 
-    # Print results per class
-    if verbose and num_classes > 1 and num_classes <= 20 and len(stats):
-        for i, c in enumerate(ap_class):
-            print(pf %
-                  (class_names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i]))
+        # Print results per class
+        if num_classes > 1 and num_classes <= 20 and len(stats):
+            for i, c in enumerate(ap_class):
+                if print_stats:
+                    print(pf %(class_names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i]))
+                
+                f.write(pf % (class_names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i]) + '\n')
 
-    # Print speeds
-    times = tuple(x / seen * 1E3 for x in (t0, t1, t2))  # speeds per image
-    shape = (batch_size, 3, img_size[0], img_size[1])
-    print(
-        f'Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS per image at shape {shape}'
-        % times)
+        # Print speeds
+        times = tuple(x / seen * 1E3 for x in (t0, t1, t2))  # speeds per image
+        shape = (batch_size, 3, img_size[0], img_size[1])
+        if print_stats:
+            print(f'Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS per image at shape {shape}'% times)
+        
+        f.write(f'Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS per image at shape {shape}'% times + '\n\n')
 
 @torch.no_grad()
-def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,nms_thres = 0.5,run_dir = './runs',verbose=False):
+def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,nms_thres = 0.5,run_dir = './runs',verbose=False , print_stats = False):
     '''
     @param model: model to evaluate
     @param data_loader: data loader for the dataset to evaluate
@@ -475,7 +488,8 @@ def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,
         nt = torch.zeros(1)
 
     # Print batch results
-    # print_stats_to_console(seen,nt,mp,mr,map50,verbose,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,dataloader.batch_size,img_size)
+
+    print_stats_to_console(seen,nt,mp,mr,map50,print_stats,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,dataloader.batch_size,img_size , run_dir)
 
     return (mp, mr, map50, map,*(loss.cpu() / len(dataloader)).tolist())
 

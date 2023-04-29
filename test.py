@@ -8,11 +8,14 @@ import torch.nn as nn
 import time
 import os
 
+#0 -> test
+#1 -> val
+
 class_names = ['bicycle', 'bus', 'car', 'motorbike', 'person'] #class names RTTS dataset
 
-root_dir='../datasets/RTTS/images/test/'
+root_dir='../datasets/RTTS/images/val/'
 num_workers=min(8, os.cpu_count()-1)
-batch_size=8
+batch_size=4
 shuffle=False
 
 #create dataloader
@@ -51,7 +54,6 @@ def testYolov3(inf_num = 0):
             run_dir= run_dir, 
             verbose=True)
     
-
 def testDEYOLOv3(inf_num = 0):
     print(f"Inference number {inf_num} on DEYOLOv3 model ...")
     class DEYOLOv3(nn.Module):
@@ -77,8 +79,7 @@ def testDEYOLOv3(inf_num = 0):
             nms_thres=0.40,
             run_dir= run_dir, 
             verbose=True)
-    
-    
+     
 def testDEYOLOv6(inf_num = 0):
     print(f"Inference number {inf_num} on DEYOLOv6 model ...")
     class DEYOLOv6(nn.Module):
@@ -146,6 +147,9 @@ def testTransWeatherYOLOv6(inf_num = 0):
     run_dir = './runs/TransWeatherYOLOv6_inference_'+str(inf_num)
     #create model
     model = TransWeatherYOLOv6()
+
+    #
+
     #evaluate model
     evaluate(model,
             dataloader,
@@ -158,10 +162,11 @@ def testTransWeatherYOLOv6(inf_num = 0):
             verbose=True)
 
 if __name__ == '__main__':
-    inf_num = int(time.localtime().tm_min)
-    # testYolov6()
-    # testYolov3()
-    # testDEYOLOv3()
-    # testDEYOLOv6()
-    testTransWeatherYOLOv3()
-    testTransWeatherYOLOv6()
+    # inf_num = int(time.localtime().tm_min)
+    inf_num = 1
+    testYolov3(inf_num = inf_num)
+    testYolov6(inf_num = inf_num)
+    testDEYOLOv3(inf_num = inf_num)
+    testDEYOLOv6(inf_num = inf_num)
+    testTransWeatherYOLOv3(inf_num = inf_num)
+    testTransWeatherYOLOv6(inf_num = inf_num)
