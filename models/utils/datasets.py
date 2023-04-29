@@ -1,12 +1,10 @@
 from __future__ import print_function, division
 import os
-from skimage import io , transform
 import matplotlib.pyplot as plt
-import numpy as np
 import cv2
 import torch
 from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms, utils
+from torchvision import transforms
 import time
 
 # Ignore warnings
@@ -48,7 +46,7 @@ class RTTS_Dataset(Dataset):
 
         if self.transform:
             image = self.transform(image)
-        return image , label
+        return image , label , img_name , (image.shape[1], image.shape[2])
     
     def collate_fn(self, batch):
         images = []
