@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from pathlib import Path
+from tqdm import tqdm
 import numpy as np
 import random
 import torch
@@ -9,7 +10,7 @@ import cv2
 import os
 
 from models.yolov6 import non_max_suppression
-from models.utils.yolo_utils import scale_coords, xywh2xyxy , box_iou , xyxy2xywh
+from models.utils.yolo_utils import scale_coords, xywh2xyxy , box_iou , xyxy2xywh 
 
 def time_synchronized(use_cpu=False):
     torch.cuda.synchronize(
@@ -307,7 +308,6 @@ def ap_per_class(tp,conf,pred_cls,target_cls,plot=False,save_dir='.', names=()):
     # Returns
         The average precision as computed in py-faster-rcnn.
     """
-
     # Sort by objectness
     i = np.argsort(-conf)
     tp, conf, pred_cls = tp[i], conf[i], pred_cls[i]
@@ -392,7 +392,8 @@ def print_stats_to_console(seen,nt,mp,mr,map50,verbose,class_names,num_classes,s
         f'Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS per image at shape {shape}'
         % times)
 
-def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,nms_thres = 0.5,run_dir = './',verbose=False):
+@torch.no_grad()
+def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,nms_thres = 0.5,run_dir = './runs',verbose=False):
     '''
     @param model: model to evaluate
     @param data_loader: data loader for the dataset to evaluate
@@ -404,6 +405,11 @@ def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,
     @param run_dir: directory to create a folder in and save the results of the evaluation
     @param verbose: whether to print stats
     '''
+
+    if isinstance(img_size, int):
+        img_size = (img_size, img_size)
+
+
     #initialize variables
     num_classes = len(class_names)
     loss = torch.zeros(3 , device=device)
@@ -412,39 +418,40 @@ def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,
     seen = 0
     json_dict, stats, ap, ap_class = [], [], [], []
 
+    #Create a folder to save the results of the evaluation
+    f = Path(run_dir)
+    if not os.path.exists(f):
+        os.makedirs(f)   
+
     #set model to evaluation mode
     model.eval()
 
-    for batch_i, (imgs, targets, paths,shapes0) in enumerate(dataloader):
-    
-        print(imgs)
-        print(targets)
-        print(paths)
-        print(shapes0)
+    model(torch.zeros(1, 3, img_size[1], img_size[0]).to(device).type_as(next(model.parameters())))
 
+    for batch_i, (imgs, targets, paths,  shapes0) in enumerate(tqdm(dataloader , desc="Evaluating")):
         t = time_synchronized()
-        imgs = imgs.to(device, non_blocking=True) / 255.0
+        imgs = imgs.to(device, non_blocking=True)
         imgs = imgs.float()  # uint8 to fp16/32
 
         targets = targets.to(device)
 
         t0 += time_synchronized() - t
 
+
         # Run model
         t = time_synchronized()
-        inf_out = model(imgs)  # inference and training outputs
+        pred , _ = model(imgs)  # inference and training outputs
         t1 += time_synchronized() - t
-
+        
         # Run NMS
         t = time_synchronized()
-        output = non_max_suppression(inf_out, conf_thres, nms_thres)
+        output = non_max_suppression(pred, conf_thres, nms_thres)
         t2 += time_synchronized() - t
 
         # Statistics per batch
         seen, stats, json_dict = get_batch_statistics(imgs, targets.clone(),paths, shapes0, output,seen, stats,json_dict)
-
-        # Plot images
-        if batch_i < 3 and verbose:
+        
+        if batch_i < 3 and verbose:         
             f = Path(run_dir) / ('test_batch%g_gt.jpg' % batch_i)
             # plot ground truth
             plot_images(imgs, targets, paths, str(f), class_names)
@@ -453,20 +460,22 @@ def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,
             plot_images(imgs, output_to_target(output, imgs.shape[2:4]), paths,str(f), class_names)
 
 
-        # Compute statistics
-        stats = [np.concatenate(x, 0) for x in zip(*stats)]  # to numpy
-        if len(stats) and stats[0].any():
-            p, r, ap, f1, ap_class = ap_per_class(*stats,plot=verbose,save_dir=run_dir,names=class_names)
-            ap50, ap = ap[:, 0], ap.mean(1)  # AP@0.5, AP@0.5:0.95
-            # [P, R, AP@0.5, AP@0.5:0.95]
-            mp, mr, map50, map = p.mean(), r.mean(), ap50.mean(), ap.mean()
-            # number of targets per class
-            nt = np.bincount(stats[3].astype(np.int64), minlength=num_classes)
-        else:
-            nt = torch.zeros(1)
+    # Compute statistics
+    stats = [np.concatenate(x, 0) for x in zip(*stats)]  # to numpy
+    if len(stats) and stats[0].any():
+        print("STATS FOUND")
+        p, r, ap, f1, ap_class = ap_per_class(*stats,plot=verbose,save_dir=run_dir,names=class_names)
+        ap50, ap = ap[:, 0], ap.mean(1)  # AP@0.5, AP@0.5:0.95
+        # [P, R, AP@0.5, AP@0.5:0.95]
+        mp, mr, map50, map = p.mean(), r.mean(), ap50.mean(), ap.mean()
+        # number of targets per class
+        nt = np.bincount(stats[3].astype(np.int64), minlength=num_classes)
+    else:
+        print("NO STATS FOUND")
+        nt = torch.zeros(1)
 
-        # Print batch results
-        # print_stats_to_console(seen,nt,mp,mr,map50,verbose,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,dataloader.batch_size,img_size)
+    # Print batch results
+    # print_stats_to_console(seen,nt,mp,mr,map50,verbose,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,dataloader.batch_size,img_size)
 
     return (mp, mr, map50, map,*(loss.cpu() / len(dataloader)).tolist())
 
