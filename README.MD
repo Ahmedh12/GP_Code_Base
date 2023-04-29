@@ -43,13 +43,17 @@ The following image enhancement modules were evaluated:
 
 The results of the comparative analysis are presented in the following format:
 
-| Enhancement Module  | Detection Module   | mAP@0.5       | F1 Score | 
-| --------------------| -------------------| --------------| ---------|
-| Faster R-CNN        |                    |               |          | 
-| Mask R-CNN          |                    |               |          | 
-| YOLOv4              |                    |               |          | 
-| SSD                 |                    |               |          | 
-| RetinaNet           |                    |               |          | 
+| Enhancement Module  | Detection Module   | mAP@0.5       | F1 Score | Time |
+| --------------------| -------------------| --------------| ---------| -----|
+|        -            | YOLOv3             | 0.279         | 0.43     |      |
+|        -            | YOLOv6             | 0.499         | 0.57     |      |
+|        -            | YOLOv7             |               |          |      |
+| DENet               | YOLOv3             | 0.299         | 0.45     |      |
+| DENet               | YOLOv6             | 0.521         | 0.59     |      |
+| DENet               | YOLOv7             |               |          |      |
+| TransWeather        | YOLOv3             | 0.196         | 0.32     |      |
+| TransWeather        | YOLOv6             | 0.456         | 0.53     |      |
+| TransWeather        | YOLOv7             |               |          |      |
 
 ## Usage
 
