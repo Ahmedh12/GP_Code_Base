@@ -2,10 +2,10 @@ import math
 import torch
 import torch.nn as nn
 
-if __name__ == '__main__':
+try:
     from utils.torch_utils import initialize_weights, is_parallel, model_info
     from utils.yolo_utils import check_anchor_order
-else:
+except ImportError:
     from .utils.torch_utils import initialize_weights, is_parallel, model_info
     from .utils.yolo_utils import check_anchor_order
 
@@ -388,6 +388,62 @@ class YOLOv3(YOLO_BASE):
         # print model info
         self.model_info(verbose=False)
 
+#####################################################Export Function#####################################################################
+def init_Yolov3(path = r'models\weights\YOLOv3_weights.pt' , classNames = None):
+    class_names = classNames or ['bicycle', 'bus', 'car', 'motorbike', 'person'] #class names RTTS dataset
+    model = YOLOv3(class_names, hyp=None , verbose=False)
+    model.load_state_dict(torch.load(path, map_location='cpu'))
+    model.eval() 
+    return model
+
+
 ########################################################Test Module######################################################################
 def testYolov3():
-    print("Yet to be implemented")
+
+    import warnings
+    warnings.filterwarnings("ignore")
+
+    import cv2
+    import numpy as np
+    from yolov6 import non_max_suppression , draw_BB
+    from utils.yolo_utils import letterbox
+    
+    img_size = 640
+    class_names = ['bicycle', 'bus', 'car', 'motorbike', 'person'] #class names RTTS dataset
+
+    #init the model
+    model = init_Yolov3()
+   
+    #load an image , preprocess it then convert it to a tensor of size (B,C,H,W)
+    img = cv2.imread(r'C:\Users\sandr\Desktop\GP_Code\datasets\RTTS\images\val\AM_Bing_211.png')
+    img_original = img.copy()
+    img = letterbox(img, new_shape=img_size, auto=True, stride=32)[0]
+    img = img.transpose((2, 0, 1))[::-1]  # HWC to CHW, BGR to RGB
+    img = torch.from_numpy(np.ascontiguousarray(img))
+    img = img.float()
+    img /= 255  # 0 - 255 to 0.0 - 1.0
+    img = img.unsqueeze(0) #add batch dimension
+    #get the prediction from the model as tensor
+    '''
+    pred - > tensor of shape (B, summation for all strides(img_height/stride * img_width/stride), classes_count + 5)
+    example :
+    image size = 640,384
+    number of classes = 5
+    max stride = 32
+    strides = [8, 16, 32]
+    pred = tensor of shape (1, 640*384/8*8 + 640*384/16*16 + 640*384/32*32, 5+5) = (1,5040,10)
+    '''
+    pred = model(img)[0] #returns [predictions , feature maps] list
+    if isinstance(pred, np.ndarray):
+        pred = torch.from_numpy(pred)
+    pred = pred.float()
+
+    #postprocess the prediction e.g. perform non-max suppression
+    det = non_max_suppression(pred, conf_thres=0.75, iou_thres=0.45, classes=None, agnostic=False, max_det=1000)[0]
+    #draw the bounding boxes on the image and display it
+    img_with_boxes = draw_BB(img,img_original,det,class_names)
+    cv2.imshow('image',img_with_boxes)
+    cv2.waitKey(0)
+
+if __name__ == '__main__':
+    testYolov3()
