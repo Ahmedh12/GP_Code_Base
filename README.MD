@@ -5,7 +5,7 @@ This repository contains a comparative analysis of multiple deep learning object
 
 ## Methodology
 ```
-                                TO BE ADDED
+                                             TO BE ADDED
 ```
 
 ## Datasets
@@ -63,11 +63,7 @@ To reproduce the results of the comparative analysis run the following commands:
 
 ## Contributer
 
-[Ahmed Hussien](https://github.com/Ahmedh12)
-[Khaled El-lethy](https://github.com/SandraHany)
-[Millania Sameh](https://github.com/MillaniaSameh)
-[Sandra Hany](https://github.com/SandraHany)
-
-## License
-
-This repository is licensed under the MIT License. See the `LICENSE` file for details.
+- [Ahmed Hussien](https://github.com/Ahmedh12)
+- [Khaled El-lethy](https://github.com/SandraHany)
+- [Millania Sameh](https://github.com/MillaniaSameh)
+- [Sandra Hany](https://github.com/SandraHany)
