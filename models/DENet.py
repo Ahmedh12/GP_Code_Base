@@ -281,7 +281,7 @@ def testDENet():
 
     # load the data
     dataLoader = createRTTSDataLoader(batch_size=4, num_workers=0, image_size=544 , shuffle=True)
-    for batch_i, (imgs, labels) in enumerate(dataLoader):
+    for batch_i, (imgs, _ ,_ ,_) in enumerate(dataLoader):
         if batch_i == 10:
             break
         imgs_enhanced = model(imgs)
