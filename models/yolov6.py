@@ -32,11 +32,18 @@
 # The YOLOv6 model uses two loss functions: VFL and DFL. VFL is a variant of the focal loss function that is used to train the classification subnetwork.
 # DFL is a variant of the smooth L1 loss function that is used to train the box regression subnetwork along with SIoU and GIoU.
 
-from layers.common import  RepVGGBlock, RepBlock, SimSPPF, SPPF, SimCSPSPPF, CSPSPPF, ConvWrapper 
-from layers.common import  SimConv , BiFusion
-from layers.common import  Conv
-from layers.common import  get_block
-from utils.utils import generate_anchors , dist2bbox , initialize_weights
+if __name__ == '__main__':
+    from layers.common import  RepVGGBlock, RepBlock, SimSPPF, SPPF, SimCSPSPPF, CSPSPPF, ConvWrapper 
+    from layers.common import  SimConv , BiFusion
+    from layers.common import  Conv
+    from layers.common import  get_block
+    from utils.utils import generate_anchors , dist2bbox , initialize_weights
+else:
+    from .layers.common import  RepVGGBlock, RepBlock, SimSPPF, SPPF, SimCSPSPPF, CSPSPPF, ConvWrapper 
+    from .layers.common import  SimConv , BiFusion
+    from .layers.common import  Conv
+    from .layers.common import  get_block
+    from .utils.utils import generate_anchors , dist2bbox , initialize_weights
 
 import time
 import math
@@ -47,6 +54,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
+from torch import load
 
 # Head , Neck , Backbone for YOLOv6s
 
@@ -732,7 +740,6 @@ def fuse_conv_and_bn(conv, bn):
 
 def fuse_model(model):
     '''Fuse convolution and batchnorm layers of the model.'''
-
     for m in model.modules():
         if (type(m) is Conv or type(m) is SimConv) and hasattr(m, "bn"):
             m.conv = fuse_conv_and_bn(m.conv, m.bn)  # update conv
@@ -893,17 +900,10 @@ def draw_BB(img,img_src,det,class_names,hide_labels=False,hide_conf=False):
             plot_box_and_label(img_with_boxes, max(round(sum(img_with_boxes.shape) / 2 * 0.003), 2), xyxy, label, color = generate_colors(class_num, True))
     return img_with_boxes
 
-#########################################################################Module Test#########################################################################
-def testYolov6():
-    import warnings
-    warnings.filterwarnings("ignore")
-
-    from torch import load
-    from utils.yolov6_utils import letterbox
-
-    #fuse_ab=True is to allow the model to make anchor-based and anchor-free predictions
+##########################################################################Export Functions###################################################################
+def init_Yolov6(path = r'models\weights\YOLOv6_weights.pt'):
     model = build_model(num_classes=5, device='cpu',fuse_ab=True, distill_ns=False) 
-    model.load_state_dict(load(r'models\weights\YOLOv6_weights.pt', map_location='cpu'))
+    model.load_state_dict(load(path, map_location='cpu'))
     
     #batchnorm fusion
     fuse_model(model).eval()
@@ -915,9 +915,20 @@ def testYolov6():
     for layer in model.modules():
         if isinstance(layer, RepVGGBlock):
             layer.switch_to_deploy()
+
+    return model
+#########################################################################Module Test#########################################################################
+def testYolov6():
+    import warnings
+    warnings.filterwarnings("ignore")
+
+    from utils.yolov6_utils import letterbox
+
+    #Model Initialization
+    model = init_Yolov6()
     
-    print("Model is {count} layers at inferene time after BNLs fusion and reparametarization  "
-          .format(count = len(list(model.named_parameters())))) #156 layers
+    # print("Model is {count} layers at inferene time after BNLs fusion and reparametarization  "
+    #       .format(count = len(list(model.named_parameters())))) #156 layers
  
     
     #Model Data for inference
@@ -955,7 +966,8 @@ def testYolov6():
     img_with_boxes = draw_BB(img,img_original,det,classNames)
     cv2.imshow('image',img_with_boxes)
     cv2.waitKey(0)
-   
+
+
 
 if __name__ == '__main__':
     testYolov6()

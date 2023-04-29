@@ -1,8 +1,13 @@
 import math
 import torch
 import torch.nn as nn
-from utils.torch_utils import initialize_weights, is_parallel, model_info
-from utils.yolo_utils import check_anchor_order
+
+if __name__ == '__main__':
+    from utils.torch_utils import initialize_weights, is_parallel, model_info
+    from utils.yolo_utils import check_anchor_order
+else:
+    from .utils.torch_utils import initialize_weights, is_parallel, model_info
+    from .utils.yolo_utils import check_anchor_order
 
 
 # CBL = Conv2d + BatchNormalization + LeakyReLU
@@ -262,7 +267,6 @@ class Detect(nn.Module):
         yv, xv = torch.meshgrid([torch.arange(ny), torch.arange(nx)])
         return torch.stack((xv, yv), 2).view((1, 1, ny, nx, 2)).float()
 
-
 class ResidualBlock(nn.Module):
     def __init__(self, in_features):
         super().__init__()
@@ -383,3 +387,7 @@ class YOLOv3(YOLO_BASE):
 
         # print model info
         self.model_info(verbose=False)
+
+########################################################Test Module######################################################################
+def testYolov3():
+    print("Yet to be implemented")

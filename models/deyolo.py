@@ -1,5 +1,9 @@
-from DENet import DENet
-from models.yolov3 import YOLO_BASE , Darknet53, Neck, Detect
+if __name__ == '__main__':
+    from DENet import DENet
+    from models.yolov3 import YOLO_BASE , Darknet53, Neck, Detect
+else:
+    from .DENet import DENet
+    from .yolov3 import YOLO_BASE , Darknet53, Neck, Detect
 
 class DEYOLO(YOLO_BASE):
     def __init__(self, class_names, hyp, verbose=False):
