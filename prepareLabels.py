@@ -1,7 +1,7 @@
 import os
 
-#prepare RTTS dataset labels and create test,train,val splits
-#https://drive.google.com/file/d/16xuZv5KKGLm-k4qgi-MRkrdYQxhQZrWR/view?usp=share_link
+# prepare RTTS dataset labels and create test,train,val splits
+# https://drive.google.com/file/d/16xuZv5KKGLm-k4qgi-MRkrdYQxhQZrWR/view?usp=share_link
  
 classes_dict={
     "bicycle":0,
