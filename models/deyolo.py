@@ -1,7 +1,7 @@
-if __name__ == '__main__':
+try:
     from DENet import DENet
     from models.yolov3 import YOLO_BASE , Darknet53, Neck, Detect
-else:
+except:
     from .DENet import DENet
     from .yolov3 import YOLO_BASE , Darknet53, Neck, Detect
 

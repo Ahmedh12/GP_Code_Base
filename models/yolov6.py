@@ -32,13 +32,13 @@
 # The YOLOv6 model uses two loss functions: VFL and DFL. VFL is a variant of the focal loss function that is used to train the classification subnetwork.
 # DFL is a variant of the smooth L1 loss function that is used to train the box regression subnetwork along with SIoU and GIoU.
 
-if __name__ == '__main__':
+try:
     from layers.common import  RepVGGBlock, RepBlock, SimSPPF, SPPF, SimCSPSPPF, CSPSPPF, ConvWrapper 
     from layers.common import  SimConv , BiFusion
     from layers.common import  Conv
     from layers.common import  get_block
     from utils.utils import generate_anchors , dist2bbox , initialize_weights
-else:
+except ImportError:
     from .layers.common import  RepVGGBlock, RepBlock, SimSPPF, SPPF, SimCSPSPPF, CSPSPPF, ConvWrapper 
     from .layers.common import  SimConv , BiFusion
     from .layers.common import  Conv
@@ -922,7 +922,7 @@ def testYolov6():
     import warnings
     warnings.filterwarnings("ignore")
 
-    from utils.yolov6_utils import letterbox
+    from utils.yolo_utils import letterbox
 
     #Model Initialization
     model = init_Yolov6()
@@ -966,8 +966,6 @@ def testYolov6():
     img_with_boxes = draw_BB(img,img_original,det,classNames)
     cv2.imshow('image',img_with_boxes)
     cv2.waitKey(0)
-
-
 
 if __name__ == '__main__':
     testYolov6()
