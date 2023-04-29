@@ -1,9 +1,0 @@
-val: ../datasets/RTTS/images/val/
-nc: 5
-is_coco: false
-names:
-- bicycle
-- bus
-- car
-- motorbike
-- person

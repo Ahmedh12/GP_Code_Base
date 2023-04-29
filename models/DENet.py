@@ -260,3 +260,44 @@ class DENet(nn.Module):
         out = self.lap_pyramid.pyramid_recons(trans_pyrs)
 
         return out
+    
+###########################################################Export Functions#######################################################
+def init_DENet(path = r'models\weights\enhancement_weights.pt'):
+    model = DENet()
+    #load the weights
+    model.load_state_dict(torch.load(path, map_location='cpu'))
+    model.eval()
+
+    return model
+
+###########################################################Test Module#######################################################
+def testDENet():
+    from utils.datasets import createRTTSDataLoader
+    import numpy as np
+    import cv2
+
+    #create model
+    model = init_DENet()
+
+    # load the data
+    dataLoader = createRTTSDataLoader(batch_size=4, num_workers=0, image_size=544 , shuffle=True)
+    for batch_i, (imgs, labels) in enumerate(dataLoader):
+        if batch_i == 10:
+            break
+        imgs_enhanced = model(imgs)
+
+        #convert to numpy
+        imgs_enhanced = imgs_enhanced.permute(0,2,3,1).detach().numpy() # (B, H, W, C)
+        imgs = imgs.permute(0,2,3,1).detach().numpy() # (B, H, W, C)
+
+        #Show the images
+        for i in range(imgs.shape[0]):
+            cocatenated = np.concatenate((imgs[i], imgs_enhanced[i]), axis=1)
+            cocatenated = cv2.cvtColor(cocatenated, cv2.COLOR_RGB2BGR)
+            cv2.imshow('Original vs. Enhanced Image', cocatenated)
+            cv2.waitKey(2)
+
+if __name__ == '__main__':
+
+    #shows the images and their enhanced versions in the first batch
+    testDENet()
