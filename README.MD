@@ -21,7 +21,7 @@ The following evaluation metrics were used for the comparative analysis:
 - mAP@0.5
 - f1 score
 
-## Models
+## [Models](https://drive.google.com/drive/folders/1SAlW2ZZjwZHpjudHtsBn6_bmaMAMVqoE?usp=share_link)
 
 ### Detection Modules
 
