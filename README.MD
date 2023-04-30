@@ -44,8 +44,8 @@ The following image enhancement modules were evaluated:
 ### Plots
 <table>
     <tr>
-        <th>Batch Ground Truth</th>
-        <th>Batch Detection Results</th>
+        <th>Ground Truth</th>
+        <th>Detection Results</th>
         <th>PR_Curve</th>
         <th>F1_Curve</th>
     </tr>
