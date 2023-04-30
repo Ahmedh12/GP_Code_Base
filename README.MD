@@ -50,7 +50,7 @@ The following image enhancement modules were evaluated:
         <th>F1_Curve</th>
     </tr>
     <tr>
-        <td colspan="4"> YoloV3 </td>
+        <td colspan="4" style="margin-left:auto;margin-right:auto;"> YoloV3 </td>
     </tr>
     <tr>
         <td><img src="screenshots/Yolov3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
@@ -59,7 +59,7 @@ The following image enhancement modules were evaluated:
         <td><img src="screenshots/Yolov3_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
     <tr>
-        <td colspan="4"> DEYoloV3 </td>
+        <td colspan="4" style="text-align:center"> DEYoloV3 </td>
     </tr>
     <tr>
         <td><img src="screenshots/DEYOLOv3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
