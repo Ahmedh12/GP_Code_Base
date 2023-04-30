@@ -41,7 +41,25 @@ The following image enhancement modules were evaluated:
 
 ## Results
 
-The results of the comparative analysis are presented in the following format:
+### Plots
+<table>
+    <tr>
+    <th colspan="4"> YoloV3 </th>
+    <tr>
+    <td>Batch Ground Truth</td>
+        <td>Batch Detection Results</td>
+        <td>PR_Curve</td>
+        <td>F1_Curve</td>
+    </tr>
+    <tr>
+    <td><img src="screenshots/Yolov3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+    <td><img src="screenshots/Yolov3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+    <td><img src="screenshots/Yolov3_inference_1/PR_curve.png" width=270 height=270></td>
+    <td><img src="screenshots/Yolov3_inference_1/F1_curve.png" width=270 height=270></td>
+</tr>
+ </table>
+
+### Summary
 
 | Enhancement Module  | Detection Module   | mAP@0.5       | F1 Score | Time |
 | --------------------| -------------------| --------------| ---------| -----|
