@@ -42,7 +42,7 @@ The following image enhancement modules were evaluated:
 ## Results
 
 ### Plots
-<table>
+<table style="margin-left:auto;margin-right:auto;">
     <tr>
         <th>Ground Truth</th>
         <th>Detection Results</th>
