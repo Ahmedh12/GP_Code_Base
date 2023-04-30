@@ -374,20 +374,20 @@ def ap_per_class(tp,conf,pred_cls,target_cls,plot=False,save_dir='.', names=()):
     # i = r.mean(0).argmax()  # max Recall index
     return p[:, i], r[:, i], ap, f1[:, i], unique_classes.astype('int32')
 
-def print_stats_to_console(seen,nt,mp,mr,map50,print_stats,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,batch_size,img_size,run_dir):
+def print_stats_to_console(seen,nt,mp,mr,map50,mAP,print_stats,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,batch_size,img_size,run_dir):
     #open the results text file if it exists 
     if not os.path.exists(run_dir + '/results.txt'):
         with open(run_dir + '/results.txt', 'x') as f:
             f.write('')
-            
+
     with open(run_dir + '/results.txt', 'a') as f:
 
         # Print results
         pf = '%20s' + '%12.4g' * 6  # print format
         if print_stats:
-            print(pf % ('all', seen, nt.sum(), mp, mr, map50, map))
+            print(pf % ('all', seen, nt.sum(), mp, mr, map50 , mAP))
         
-        f.write(pf % ('all', seen, nt.sum(), mp, mr, map50, map) + '\n')
+        f.write(pf % ('all', seen, nt.sum(), mp, mr, map50 , mAP) + '\n')
 
         # Print results per class
         if num_classes > 1 and num_classes <= 20 and len(stats):
@@ -439,6 +439,7 @@ def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,
     #set model to evaluation mode
     model.eval()
 
+    #Warm up the model
     model(torch.zeros(1, 3, img_size[1], img_size[0]).to(device).type_as(next(model.parameters())))
 
     for batch_i, (imgs, targets, paths,  shapes0) in enumerate(tqdm(dataloader , desc="Evaluating")):
@@ -480,7 +481,7 @@ def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,
         p, r, ap, f1, ap_class = ap_per_class(*stats,plot=verbose,save_dir=run_dir,names=class_names)
         ap50, ap = ap[:, 0], ap.mean(1)  # AP@0.5, AP@0.5:0.95
         # [P, R, AP@0.5, AP@0.5:0.95]
-        mp, mr, map50, map = p.mean(), r.mean(), ap50.mean(), ap.mean()
+        mp, mr, map50, mAP = p.mean(), r.mean(), ap50.mean(), ap.mean()
         # number of targets per class
         nt = np.bincount(stats[3].astype(np.int64), minlength=num_classes)
     else:
@@ -489,7 +490,7 @@ def evaluate(model,dataloader,class_names , img_size ,device,conf_thres = 0.001,
 
     # Print batch results
 
-    print_stats_to_console(seen,nt,mp,mr,map50,print_stats,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,dataloader.batch_size,img_size , run_dir)
+    print_stats_to_console(seen,nt,mp,mr,map50,mAP,print_stats,class_names,num_classes,stats,ap_class,p,r,ap50,ap,t0,t1,t2,dataloader.batch_size,img_size , run_dir)
 
     return (mp, mr, map50, map,*(loss.cpu() / len(dataloader)).tolist())
 

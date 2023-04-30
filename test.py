@@ -4,6 +4,7 @@ from models.yolov6 import init_Yolov6
 from models.yolov3 import init_Yolov3
 from models.DENet import init_DENet
 from evaluate import evaluate
+import torch
 import torch.nn as nn
 import time
 import os
@@ -17,7 +18,7 @@ root_dir='../datasets/RTTS/images/val/'
 num_workers=min(8, os.cpu_count()-1)
 batch_size=4
 shuffle=False
-
+device= 'cuda:0' if torch.cuda.is_available() else 'cpu'
 #create dataloader
 dataloader = createRTTSDataLoader(root_dir= root_dir, batch_size=batch_size, num_workers=num_workers, shuffle=shuffle)
 
@@ -26,13 +27,13 @@ def testYolov6(inf_num = 0):
     run_dir = './runs/Yolov6_inference_'+str(inf_num)
 
     #create model
-    model = init_Yolov6()
+    model = init_Yolov6().to(device)
     #evaluate model
     evaluate(model, 
             dataloader,
             class_names=class_names,
             img_size = 544, 
-            device='cpu', 
+            device= device, 
             conf_thres=0.25, 
             nms_thres=0.40,
             run_dir= run_dir, 
@@ -42,13 +43,13 @@ def testYolov3(inf_num = 0):
     print(f"Inference number {inf_num} on Yolov3 model ...")
     run_dir = './runs/Yolov3_inference_'+str(inf_num)
     #create model
-    model = init_Yolov3()
+    model = init_Yolov3().to(device)
     #evaluate model
     evaluate(model, 
             dataloader,
             class_names=class_names,
             img_size = 544, 
-            device='cpu', 
+            device= device, 
             conf_thres=0.25, 
             nms_thres=0.40,
             run_dir= run_dir, 
@@ -68,13 +69,13 @@ def testDEYOLOv3(inf_num = 0):
     
     run_dir = './runs/DEYOLOv3_inference_'+str(inf_num)
     #create model
-    model = DEYOLOv3()
+    model = DEYOLOv3().eval().to(device)
     #evaluate model
     evaluate(model, 
             dataloader,
             class_names=class_names,
             img_size = 544, 
-            device='cpu', 
+            device= device, 
             conf_thres=0.25, 
             nms_thres=0.40,
             run_dir= run_dir, 
@@ -94,13 +95,13 @@ def testDEYOLOv6(inf_num = 0):
         
     run_dir = './runs/DEYOLOv6_inference_'+str(inf_num)
     #create model
-    model = DEYOLOv6()
+    model = DEYOLOv6().eval().to(device)
     #evaluate model
     evaluate(model,
             dataloader,
             class_names=class_names,
             img_size = 544,
-            device='cpu',
+            device= device,
             conf_thres=0.25,
             nms_thres=0.40,
             run_dir= run_dir,
@@ -120,13 +121,13 @@ def testTransWeatherYOLOv3(inf_num = 0):
     
     run_dir = './runs/TransWeatherYOLOv3_inference_'+str(inf_num)
     #create model
-    model = TransWeatherYOLOv3()
+    model = TransWeatherYOLOv3().eval().to(device)
     #evaluate model
     evaluate(model,
             dataloader,
             class_names=class_names,
             img_size = 544,
-            device='cpu',
+            device= device,
             conf_thres=0.25,
             nms_thres=0.40,
             run_dir= run_dir,
@@ -146,20 +147,32 @@ def testTransWeatherYOLOv6(inf_num = 0):
     
     run_dir = './runs/TransWeatherYOLOv6_inference_'+str(inf_num)
     #create model
-    model = TransWeatherYOLOv6()
-
-    #
-
+    model = TransWeatherYOLOv6().eval().to(device)
     #evaluate model
     evaluate(model,
             dataloader,
             class_names=class_names,
             img_size = 544,
-            device='cpu',
+            device= device,
             conf_thres=0.25,
             nms_thres=0.40,
             run_dir= run_dir,
             verbose=True)
+
+def test(model , model_name , inf_num = 0 , run_dir = './runs/'):
+    print(f"Inference number {inf_num} on {model_name} model ...")
+    run_dir = run_dir + model_name + '_inference_'+str(inf_num)
+    #evaluate model
+    evaluate(model,
+            dataloader,
+            class_names=class_names,
+            img_size = 544,
+            device= device,
+            conf_thres=0.25,
+            nms_thres=0.40,
+            run_dir= run_dir,
+            verbose=True)
+    
 
 if __name__ == '__main__':
     # inf_num = int(time.localtime().tm_min)
