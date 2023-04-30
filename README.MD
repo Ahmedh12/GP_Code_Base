@@ -55,8 +55,8 @@ The following image enhancement modules were evaluated:
     <tr>
         <td><img src="screenshots/Yolov3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
         <td><img src="screenshots/Yolov3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/Yolov3_inference_1/PR_curve.png" width=340 height=270></td>
-        <td><img src="screenshots/Yolov3_inference_1/F1_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/Yolov3_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/Yolov3_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
     <tr>
         <td colspan="4"> DEYoloV3 </td>
@@ -64,8 +64,8 @@ The following image enhancement modules were evaluated:
     <tr>
         <td><img src="screenshots/DEYOLOv3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
         <td><img src="screenshots/DEYOLOv3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/DEYOLOv3_inference_1/PR_curve.png" width=340 height=270></td>
-        <td><img src="screenshots/DEYOLOv3_inference_1/F1_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/DEYOLOv3_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/DEYOLOv3_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
     <tr>
         <td colspan="4"> TransWeatherYoloV3 </td>
@@ -73,8 +73,8 @@ The following image enhancement modules were evaluated:
     <tr>
         <td><img src="screenshots/TransWeatherYOLOv3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
         <td><img src="screenshots/TransWeatherYOLOv3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/TransWeatherYOLOv3_inference_1/PR_curve.png" width=340 height=270></td>
-        <td><img src="screenshots/TransWeatherYOLOv3_inference_1/F1_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv3_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv3_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
      <tr>
         <td colspan="4"> YoloV6 </td>
@@ -82,8 +82,8 @@ The following image enhancement modules were evaluated:
     <tr>
         <td><img src="screenshots/Yolov6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
         <td><img src="screenshots/Yolov6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/Yolov6_inference_1/PR_curve.png" width=340 height=270></td>
-        <td><img src="screenshots/Yolov6_inference_1/F1_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/Yolov6_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/Yolov6_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
     <tr>
         <td colspan="4"> DEYolov6 </td>
@@ -91,8 +91,8 @@ The following image enhancement modules were evaluated:
     <tr>
         <td><img src="screenshots/DEYOLOv6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
         <td><img src="screenshots/DEYOLOv6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/DEYOLOv6_inference_1/PR_curve.png" width=340 height=270></td>
-        <td><img src="screenshots/DEYOLOv6_inference_1/F1_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/DEYOLOv6_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/DEYOLOv6_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
     <tr>
         <td colspan="4"> TransWeatherYolov6 </td>
@@ -100,8 +100,8 @@ The following image enhancement modules were evaluated:
     <tr>
         <td><img src="screenshots/TransWeatherYOLOv6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
         <td><img src="screenshots/TransWeatherYOLOv6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/TransWeatherYOLOv6_inference_1/PR_curve.png" width=340 height=270></td>
-        <td><img src="screenshots/TransWeatherYOLOv6_inference_1/F1_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv6_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv6_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
  </table>
 
