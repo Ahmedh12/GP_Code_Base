@@ -44,34 +44,88 @@ The following image enhancement modules were evaluated:
 ### Plots
 <table>
     <tr>
-    <th colspan="4"> YoloV3 </th>
+        <th>Batch Ground Truth</th>
+        <th>Batch Detection Results</th>
+        <th>PR_Curve</th>
+        <th>F1_Curve</th>
+    </tr>
+
     <tr>
-    <td>Batch Ground Truth</td>
-        <td>Batch Detection Results</td>
-        <td>PR_Curve</td>
-        <td>F1_Curve</td>
+        <td colspan="4"> YoloV3 </td>
     </tr>
     <tr>
-    <td><img src="screenshots/Yolov3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
-    <td><img src="screenshots/Yolov3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-    <td><img src="screenshots/Yolov3_inference_1/PR_curve.png" width=270 height=270></td>
-    <td><img src="screenshots/Yolov3_inference_1/F1_curve.png" width=270 height=270></td>
-</tr>
+        <td><img src="screenshots/Yolov3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/Yolov3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/Yolov3_inference_1/PR_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/Yolov3_inference_1/F1_curve.png" width=340 height=270></td>
+    </tr>
+
+    <tr>
+        <td colspan="4"> DEYoloV3 </td>
+    </tr>
+    <tr>
+        <td><img src="screenshots/DEYOLOv3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/DEYOLOv3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/DEYOLOv3_inference_1/PR_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/DEYOLOv3_inference_1/F1_curve.png" width=340 height=270></td>
+    </tr>
+
+    <tr>
+        <td colspan="4"> TransWeatherYoloV3 </td>
+    </tr>
+    <tr>
+        <td><img src="screenshots/TransWeatherYOLOv3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv3_inference_1/PR_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv3_inference_1/F1_curve.png" width=340 height=270></td>
+    </tr>
+
+        <tr>
+        <td colspan="4"> YoloV6 </td>
+    </tr>
+    <tr>
+        <td><img src="screenshots/Yolov6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/Yolov6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/Yolov6_inference_1/PR_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/Yolov6_inference_1/F1_curve.png" width=340 height=270></td>
+    </tr>
+
+    <tr>
+        <td colspan="4"> DEYolov6 </td>
+    </tr>
+    <tr>
+        <td><img src="screenshots/DEYOLOv6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/DEYOLOv6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/DEYOLOv6_inference_1/PR_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/DEYOLOv6_inference_1/F1_curve.png" width=340 height=270></td>
+    </tr>
+
+    <tr>
+        <td colspan="4"> TransWeatherYolov6 </td>
+    </tr>
+    <tr>
+        <td><img src="screenshots/TransWeatherYOLOv6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv6_inference_1/PR_curve.png" width=340 height=270></td>
+        <td><img src="screenshots/TransWeatherYOLOv6_inference_1/F1_curve.png" width=340 height=270></td>
+    </tr>
+
+
  </table>
 
 ### Summary
 
-| Enhancement Module  | Detection Module   | mAP@0.5       | F1 Score | Time |
-| --------------------| -------------------| --------------| ---------| -----|
-|        -            | YOLOv3             | 0.279         | 0.43     |      |
-|        -            | YOLOv6             | 0.499         | 0.57     |      |
-|        -            | YOLOv7             |               |          |      |
-| DENet               | YOLOv3             | 0.299         | 0.45     |      |
-| DENet               | YOLOv6             | 0.521         | 0.59     |      |
-| DENet               | YOLOv7             |               |          |      |
-| TransWeather        | YOLOv3             | 0.196         | 0.32     |      |
-| TransWeather        | YOLOv6             | 0.456         | 0.53     |      |
-| TransWeather        | YOLOv7             |               |          |      |
+| Enhancement Module  | Detection Module   | mAP@0.5       | F1 Score | Time/ms |
+| --------------------| -------------------| --------------| ---------| --------|
+|        -            | YOLOv3             | 0.279         | 0.43     | 34.4    |
+|        -            | YOLOv6             | 0.499         | 0.57     | 12.3    |
+|        -            | YOLOv7             |               |          |         |
+| DENet               | YOLOv3             | 0.299         | 0.45     | 45.3    |
+| DENet               | YOLOv6             | 0.521         | 0.59     | 23.4    |
+| DENet               | YOLOv7             |               |          |         |
+| TransWeather        | YOLOv3             | 0.196         | 0.32     | 73.7    |
+| TransWeather        | YOLOv6             | 0.456         | 0.53     | 51.5    |
+| TransWeather        | YOLOv7             |               |          |         |
 
 ## Usage
 
