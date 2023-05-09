@@ -42,23 +42,23 @@ The following image enhancement modules were evaluated:
 ## Results
 
 ### Plots
-<table style="margin-left:auto;margin-right:auto;">
+<table>
     <tr>
         <th>Ground Truth</th>
         <th>Detection Results</th>
         <th>PR_Curve</th>
         <th>F1_Curve</th>
     </tr>
-    <tr style="margin-left:auto;margin-right:auto;">
+    <tr>
         <td colspan="4"> YoloV3 </td>
     </tr>
     <tr>
-        <td><img src="screenshots/Yolov3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
-        <td><img src="screenshots/Yolov3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/Yolov3_inference_1/PR_curve.png" width=400 height=270></td>
-        <td><img src="screenshots/Yolov3_inference_1/F1_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/YOLOv3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/YOLOv3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/YOLOv3_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/YOLOv3_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
-    <tr style="text-align:center">
+    <tr>
         <td colspan="4"> DEYoloV3 </td>
     </tr>
     <tr>
@@ -80,10 +80,10 @@ The following image enhancement modules were evaluated:
         <td colspan="4"> YoloV6 </td>
     </tr>
     <tr>
-        <td><img src="screenshots/Yolov6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
-        <td><img src="screenshots/Yolov6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/Yolov6_inference_1/PR_curve.png" width=400 height=270></td>
-        <td><img src="screenshots/Yolov6_inference_1/F1_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/YOLOv6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/YOLOv6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/YOLOv6_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/YOLOv6_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
     <tr>
         <td colspan="4"> DEYolov6 </td>
@@ -109,14 +109,14 @@ The following image enhancement modules were evaluated:
 
 | Enhancement Module  | Detection Module   | mAP@0.5       | F1 Score | Time/ms |
 | --------------------| -------------------| --------------| ---------| --------|
-|        -            | YOLOv3             | 0.279         | 0.43     | 34.4    |
-|        -            | YOLOv6             | 0.499         | 0.57     | 12.3    |
+|        -            | YOLOv3             | 0.446         | 0.51     | 34.4    |
+|        -            | YOLOv6             | 0.636         | 0.64     | 12.3    |
 |        -            | YOLOv7             |               |          |         |
-| DENet               | YOLOv3             | 0.299         | 0.45     | 45.3    |
-| DENet               | YOLOv6             | 0.521         | 0.59     | 23.4    |
+| DENet               | YOLOv3             | 0.537         | 0.56     | 45.3    |
+| DENet               | YOLOv6             | 0.605         | 0.61     | 23.4    |
 | DENet               | YOLOv7             |               |          |         |
-| TransWeather        | YOLOv3             | 0.196         | 0.32     | 73.7    |
-| TransWeather        | YOLOv6             | 0.456         | 0.53     | 51.5    |
+| TransWeather        | YOLOv3             | 0.368         | 0.45     | 73.7    |
+| TransWeather        | YOLOv6             | 0.609         | 0.63     | 51.5    |
 | TransWeather        | YOLOv7             |               |          |         |
 
 ## Usage
