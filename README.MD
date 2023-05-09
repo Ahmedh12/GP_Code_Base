@@ -53,10 +53,10 @@ The following image enhancement modules were evaluated:
         <td colspan="4"> YoloV3 </td>
     </tr>
     <tr>
-        <td><img src="screenshots/YOLOv3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
-        <td><img src="screenshots/YOLOv3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/YOLOv3_inference_1/PR_curve.png" width=400 height=270></td>
-        <td><img src="screenshots/YOLOv3_inference_1/F1_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/Yolov3_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/Yolov3_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/Yolov3_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/Yolov3_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
     <tr>
         <td colspan="4"> DEYoloV3 </td>
@@ -80,10 +80,10 @@ The following image enhancement modules were evaluated:
         <td colspan="4"> YoloV6 </td>
     </tr>
     <tr>
-        <td><img src="screenshots/YOLOv6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
-        <td><img src="screenshots/YOLOv6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
-        <td><img src="screenshots/YOLOv6_inference_1/PR_curve.png" width=400 height=270></td>
-        <td><img src="screenshots/YOLOv6_inference_1/F1_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/Yolov6_inference_1/test_batch0_gt.jpg" width=270 height=270></td>
+        <td><img src="screenshots/Yolov6_inference_1/test_batch0_pred.jpg" width=270 height=270></td>
+        <td><img src="screenshots/Yolov6_inference_1/PR_curve.png" width=400 height=270></td>
+        <td><img src="screenshots/Yolov6_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
     <tr>
         <td colspan="4"> DEYolov6 </td>
