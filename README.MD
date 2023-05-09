@@ -42,14 +42,14 @@ The following image enhancement modules were evaluated:
 ## Results
 
 ### Plots
-<table>
+<table style="margin-left:auto;margin-right:auto;">
     <tr>
         <th>Ground Truth</th>
         <th>Detection Results</th>
         <th>PR_Curve</th>
         <th>F1_Curve</th>
     </tr>
-    <tr>
+    <tr style="margin-left:auto;margin-right:auto;">
         <td colspan="4"> YoloV3 </td>
     </tr>
     <tr>
@@ -58,7 +58,7 @@ The following image enhancement modules were evaluated:
         <td><img src="screenshots/Yolov3_inference_1/PR_curve.png" width=400 height=270></td>
         <td><img src="screenshots/Yolov3_inference_1/F1_curve.png" width=400 height=270></td>
     </tr>
-    <tr>
+    <tr style="text-align:center">
         <td colspan="4"> DEYoloV3 </td>
     </tr>
     <tr>
