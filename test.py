@@ -2,6 +2,7 @@ from models.utils.datasets import createRTTSDataLoader
 from models.TransWeather import init_TransWeather
 from models.yolov6 import init_Yolov6
 from models.yolov3 import init_Yolov3
+from models.yolo import init_Yolov7
 from models.DENet import init_DENet
 from evaluate import evaluate
 import torch
@@ -45,6 +46,16 @@ class DEYOLOv6(nn.Module):
         x = self.de(x)
         x = self.yolo(x)
         return x
+    
+class DEYOLOv7(nn.Module):
+    def __init__(self):
+        super(DEYOLOv7, self).__init__()
+        self.yolo = init_Yolov7()
+        self.de = init_DENet()
+    def forward(self, x):
+        x = self.de(x)
+        x = self.yolo(x)
+        return x
 
 class TransWeatherYOLOv3(nn.Module):
     def __init__(self):
@@ -60,6 +71,16 @@ class TransWeatherYOLOv6(nn.Module):
     def __init__(self):
         super(TransWeatherYOLOv6, self).__init__()
         self.yolo = init_Yolov6()
+        self.transweather = init_TransWeather()
+    def forward(self, x):
+        x = self.transweather(x)
+        x = self.yolo(x)
+        return x
+    
+class TransWeatherYOLOv7(nn.Module):
+    def __init__(self):
+        super(TransWeatherYOLOv7, self).__init__()
+        self.yolo = init_Yolov7()
         self.transweather = init_TransWeather()
     def forward(self, x):
         x = self.transweather(x)
@@ -84,12 +105,12 @@ def test(model , model_name , inf_num = 0 , run_dir = './runs/'):
 if __name__ == '__main__':
     inf_num = 2
 
-    model_names = ["YOLOv3" , "YOLOv6" , "DEYOLOv3" , "DEYOLOv6" , "TransWeatherYOLOv3" , "TransWeatherYOLOv6"]
-    models = [init_Yolov3() , init_Yolov6() , DEYOLOv3() , DEYOLOv6() , TransWeatherYOLOv3() , TransWeatherYOLOv6()]
+    model_names = ["YOLOv3", "YOLOv6", "YOLOv7", "DEYOLOv3", "DEYOLOv6", "DEYOLOv7", "TransWeatherYOLOv3", "TransWeatherYOLOv6", "TransWeatherYOLOv7"]
+    models = [init_Yolov3(), init_Yolov6(), init_Yolov7(), DEYOLOv3(), DEYOLOv6(), DEYOLOv7(), TransWeatherYOLOv3(), TransWeatherYOLOv6(), TransWeatherYOLOv7()]
     
     for name , model in zip(model_names , models):
         model.to(device)
-        test(model , name , inf_num = inf_num)
+        test(model, name, inf_num = inf_num)
     
 
 
