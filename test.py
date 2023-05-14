@@ -79,8 +79,11 @@ class HybridEnhancedYOLOv6(nn.Module):
         x = self.yolo(x)
         return x
 
-def test(model , model_name , inf_num = 0 , run_dir = './runs/'):
+def test(model , model_name , inf_num = 0 , run_dir = './runs/' , verbose = False):
+    from models.utils.torch_utils import model_info
+
     print(f"Inference number {inf_num} on {model_name} model ...")
+    model_info(model , verbose=verbose)
     run_dir = run_dir + model_name + '_inference_'+str(inf_num)
     #evaluate model
     evaluate(model,
@@ -100,14 +103,8 @@ if __name__ == '__main__':
     model_names = ["YOLOv3" , "YOLOv6" , "DEYOLOv3" , "DEYOLOv6" , "TransWeatherYOLOv3" , "TransWeatherYOLOv6" , "HybridEnhancedYOLOv6"]
     models = [init_Yolov3() , init_Yolov6() , DEYOLOv3() , DEYOLOv6() , TransWeatherYOLOv3() , TransWeatherYOLOv6() , HybridEnhancedYOLOv6()]
     
-    # for name , model in zip(model_names , models):
-    #     model.to(device)
-    #     test(model , name , inf_num = inf_num)
-
-    models[6].to(device)
-    test(models[6] , model_names[6] , inf_num = 1)
-    
-
-
-
-    
+    for name , model in zip(model_names , models):
+        model.to(device)
+        test(model , name , inf_num = inf_num)
+        
+    print("Done!")
