@@ -6,7 +6,7 @@ from models.DENet import init_DENet
 from evaluate import evaluate
 import torch
 import torch.nn as nn
-import time
+
 import os
 
 #0 -> test
@@ -65,6 +65,19 @@ class TransWeatherYOLOv6(nn.Module):
         x = self.transweather(x)
         x = self.yolo(x)
         return x
+    
+class HybridEnhancedYOLOv6(nn.Module):
+    def __init__(self):
+        super(HybridEnhancedYOLOv6, self).__init__()
+        self.yolo = init_Yolov6()
+        self.de = init_DENet()
+        self.transweather = init_TransWeather()
+
+    def forward(self, x):
+        x = self.de(x)
+        x = self.transweather(x)
+        x = self.yolo(x)
+        return x
 
 def test(model , model_name , inf_num = 0 , run_dir = './runs/'):
     print(f"Inference number {inf_num} on {model_name} model ...")
@@ -84,12 +97,15 @@ def test(model , model_name , inf_num = 0 , run_dir = './runs/'):
 if __name__ == '__main__':
     inf_num = 2
 
-    model_names = ["YOLOv3" , "YOLOv6" , "DEYOLOv3" , "DEYOLOv6" , "TransWeatherYOLOv3" , "TransWeatherYOLOv6"]
-    models = [init_Yolov3() , init_Yolov6() , DEYOLOv3() , DEYOLOv6() , TransWeatherYOLOv3() , TransWeatherYOLOv6()]
+    model_names = ["YOLOv3" , "YOLOv6" , "DEYOLOv3" , "DEYOLOv6" , "TransWeatherYOLOv3" , "TransWeatherYOLOv6" , "HybridEnhancedYOLOv6"]
+    models = [init_Yolov3() , init_Yolov6() , DEYOLOv3() , DEYOLOv6() , TransWeatherYOLOv3() , TransWeatherYOLOv6() , HybridEnhancedYOLOv6()]
     
-    for name , model in zip(model_names , models):
-        model.to(device)
-        test(model , name , inf_num = inf_num)
+    # for name , model in zip(model_names , models):
+    #     model.to(device)
+    #     test(model , name , inf_num = inf_num)
+
+    models[6].to(device)
+    test(models[6] , model_names[6] , inf_num = 1)
     
 
 

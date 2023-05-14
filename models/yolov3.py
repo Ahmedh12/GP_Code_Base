@@ -385,9 +385,6 @@ class YOLOv3(YOLO_BASE):
         # init model weight
         self.init_weight()
 
-        # print model info
-        self.model_info(verbose=False)
-
 #####################################################Export Function#####################################################################
 def init_Yolov3(path = r'models\weights\YOLOv3_weights.pt' , classNames = None):
     class_names = classNames or ['bicycle', 'bus', 'car', 'motorbike', 'person'] #class names RTTS dataset
