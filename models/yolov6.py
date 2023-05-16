@@ -901,20 +901,21 @@ def draw_BB(img,img_src,det,class_names,hide_labels=False,hide_conf=False):
     return img_with_boxes
 
 ##########################################################################Export Functions###################################################################
-def init_Yolov6(path = r'models\weights\YOLOv6_weights.pt'):
+def init_Yolov6(path = r'models\weights\YOLOv6_weights.pt' , train=False):
     model = build_model(num_classes=5, device='cpu',fuse_ab=True, distill_ns=False) 
     model.load_state_dict(load(path, map_location='cpu'))
     
     #batchnorm fusion
-    fuse_model(model).eval()
 
-    # Reparametarization : switch to deploy mode 
-    # YOLOv6s : 
-    #   training : 768 layers -> 656 layers after batchnorm fusion
-    #   inference  268 layers -> 156 layers after batchnorm fusion
-    for layer in model.modules():
-        if isinstance(layer, RepVGGBlock):
-            layer.switch_to_deploy()
+    if not train:
+        fuse_model(model).eval()
+        # Reparametarization : switch to deploy mode 
+        # YOLOv6s : 
+        #   training : 768 layers -> 656 layers after batchnorm fusion
+        #   inference  268 layers -> 156 layers after batchnorm fusion
+        for layer in model.modules():
+            if isinstance(layer, RepVGGBlock):
+                layer.switch_to_deploy()
 
     return model
 #########################################################################Module Test#########################################################################

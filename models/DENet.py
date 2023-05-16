@@ -262,11 +262,13 @@ class DENet(nn.Module):
         return out
     
 ###########################################################Export Functions#######################################################
-def init_DENet(path = r'models\weights\enhancement_weights.pt'):
+def init_DENet(path = r'models\weights\enhancement_weights.pt' , train = False):
     model = DENet()
     #load the weights
     model.load_state_dict(torch.load(path, map_location='cpu'))
-    model.eval()
+
+    if not train:
+        model.eval()
 
     return model
 

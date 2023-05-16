@@ -749,9 +749,14 @@ class Transweather(nn.Module):
     
 
 ########################################################Export Function#################################################################
-def init_TransWeather(path=r'models\weights\transWeather_weights.pt'):
+def init_TransWeather(path=r'models\weights\transWeather_weights.pt' , train=False):
     model = Transweather()
     model.load_state_dict(torch.load(path,map_location=torch.device('cpu')))
+
+    if train:
+        model.train()
+    else:
+        model.eval()
     return model
 
 ########################################################Test Module#####################################################################
