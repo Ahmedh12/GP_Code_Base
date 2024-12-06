@@ -129,9 +129,8 @@ To reproduce the results of the comparative analysis run the following commands:
     python test.py
 ```
 
-## Contributer
+## Contributors
 
 - [Ahmed Hussien](https://github.com/Ahmedh12)
-- [Khaled El-lethy](https://github.com/SandraHany)
+- [Khaled El-lethy]
 - [Millania Sameh](https://github.com/MillaniaSameh)
-- [Sandra Hany](https://github.com/SandraHany)
