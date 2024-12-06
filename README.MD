@@ -132,5 +132,5 @@ To reproduce the results of the comparative analysis run the following commands:
 ## Contributors
 
 - [Ahmed Hussien](https://github.com/Ahmedh12)
-- [Khaled El-lethy]
+- [Khaled El-lethy](https://github.com/Ahmedh12)
 - [Millania Sameh](https://github.com/MillaniaSameh)
